@@ -1,2 +1,2 @@
 # Licence-Informatique
-TP de Licence 2 et Licence 3.
+TP de Licence 2 et Licence 3 Informatique.
