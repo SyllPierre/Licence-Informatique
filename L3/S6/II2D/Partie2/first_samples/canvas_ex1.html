@@ -1,0 +1,40 @@
+<html>
+  <body>
+    <canvas id="input" width="320" height="240"/><br/>
+    <script type="text/javascript">
+
+      //BLOC1
+      //On prends l'objet canavas par son ID.
+      //On prends le contexte de dessin sur le canevas.
+      //On dessine un rectangle en x = 90, y = 90 de longueur 20 et hauteur 20.
+      var canvas = document.getElementById("input");
+      var ctx2d = canvas.getContext("2d");
+      ctx2d.fillRect(90, 90, 20, 20);
+
+      //BLOC2
+      //Conversion de tout le canvas en image.
+      //On récupère les données de l'image sous forme de tableau.
+      var imgData = ctx2d.getImageData(0, 0, canvas.width, canvas.height);
+      var pixels = imgData.data;
+
+      //BLOC3
+      //On récupére des données.
+      //On récupére le pixel de coordonnées (100,100).
+      //On calcul la position des données du pixel.
+      //On récupére la donnée rouge.
+      //On récupére la donnée verte qui est à la suite de la donnée rouge donc décalage de 1 octet.
+      //On récupére la donnée bleue qui est à la suite de la donnée verte donc décalage de 1 octet.
+      //On récupére la donnée de l'opacité qui est à la suite de la donnée bleue donc décalage de 1 octet.
+      //Affiche les informations en question sur une alerte.
+      var x = 100; var y = 100;
+      var pos_pixel_dans_vector = (y * imgData.width + x)<<2;
+      var r = pixels[pos_pixel_dans_vector + 0];
+      var g = pixels[pos_pixel_dans_vector + 1];
+      var b = pixels[pos_pixel_dans_vector + 2];
+      var a = pixels[pos_pixel_dans_vector + 3];
+
+      alert("Pixel at ("+x+", "+y+") : ("+r+", "+g+", "+b+", "+a+")");
+
+      </script>
+    </body>
+  </html>

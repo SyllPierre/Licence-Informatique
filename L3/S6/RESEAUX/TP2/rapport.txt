@@ -1,0 +1,233 @@
+DESMAREST Mathilde
+SYLLEBRANQUE Pierre
+
+TP n°2 : Liaison de données
+
+=================
+Capture de trames
+=================
+
+1. La commande ifconfig sert à configurer les interfaces réseau résidentes dans le noyau.
+Si aucun argument n'est donné, ifconfig affiche simplement l'état des
+interfaces actuellement définies.
+Si seul le paramètre -a est fourni, il affiche l'état de toutes les interfaces, même celles qui ne sont pas actives.
+Si seul le paramètre interface est
+donné, il affiche seulement l'état de l'interface correspondante.
+
+2. Les interfaces actuellement actives sont eth0 et l0.
+
+eth0      Link encap:Ethernet  HWaddr e4:54:e8:59:67:ee  
+          inet adr:192.168.5.65  Bcast:192.168.5.255  Masque:255.255.255.0
+          adr inet6: fe80::e654:e8ff:fe59:67ee/64 Scope:Lien
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          Packets reçus:12241 erreurs:0 :0 overruns:0 frame:0
+          TX packets:7129 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 lg file transmission:1000 
+          Octets reçus:13082229 (13.0 MB) Octets transmis:794118 (794.1 KB)
+          Interruption:16 Mémoire:92c00000-92c20000 
+
+lo        Link encap:Boucle locale  
+          inet adr:127.0.0.1  Masque:255.0.0.0
+          adr inet6: ::1/128 Scope:Hôte
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          Packets reçus:11745 erreurs:0 :0 overruns:0 frame:0
+          TX packets:11745 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 lg file transmission:1000 
+          Octets reçus:781310 (781.3 KB) Octets transmis:781310 (781.3 KB)
+
+3. Comme l0 ne peut pas communiquer avec les autres machines car c'est une boucle locale, seule eth0 permet une communication avec les autres machines.
+
+4. Adresse MAC : e4:54:e8:59:85:ef (repéré avec HWaddr)
+   Adresse IPv4 : 192.168.5.59 (repéré avec IPv4).
+
+5. On utilise la commande ping + @b05pX
+
+desmarest@b05p15:~$ ping b05p18
+PING b05p18.fil.univ-lille1.fr (192.168.5.68) 56(84) bytes of data.
+64 bytes from b05p18.fil.univ-lille1.fr (192.168.5.68): icmp_seq=1 ttl=64 time=1.47 ms
+64 bytes from b05p18.fil.univ-lille1.fr (192.168.5.68): icmp_seq=2 ttl=64 time=0.712 ms
+64 bytes from b05p18.fil.univ-lille1.fr (192.168.5.68): icmp_seq=3 ttl=64 time=0.820 ms
+64 bytes from b05p18.fil.univ-lille1.fr (192.168.5.68): icmp_seq=4 ttl=64 time=0.834 ms
+64 bytes from b05p18.fil.univ-lille1.fr (192.168.5.68): icmp_seq=5 ttl=64 time=0.715 ms
+64 bytes from b05p18.fil.univ-lille1.fr (192.168.5.68): icmp_seq=6 ttl=64 time=0.583 ms
+
+--- b05p18.fil.univ-lille1.fr ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 5087ms
+rtt min/avg/max/mdev = 0.583/0.856/1.476/0.291 ms
+
+6. La valeur Time retrounée par la commande ping représente un aller retour en temps d'un envoi de paquet.
+
+7. L'adresse IP permet d'organiser de façon logique l'ensemble du réseau qui peut être changée pour une machine donnée.
+L'adresse MAC est une adresse fixe permettant d'identifier une machine sur le réseaux de manière unique, elle est censé être inchangeable.
+De plus, les adresses MAC sont visibles uniquement à l'intérieur d'un réseau local.
+Elles disparaissent dès que l'on passe par un routeur.
+
+8. Les paquets envoyés et reçus suite à l'éxecution du ping est echo request et echo reply. 
+Le protocole utilisé est ICMP.
+
+9. Le protocole appartient à la couche réseau et liaison.
+
+10. monfiltre ip.src==192.168.5.65 and ip.dst==192.168.5.68
+
+11. Dans Option de capture : Ethernet -> Modifier : net 192.168.5.68
+
+========
+Ethernet
+========
+
+1. Le code du protocole de couche supérieur (correspond au type) est IPv4 0800.
+
+2. Le rôle des 2 premiers champs de l'en-tête de la trame est, pour l'un, l'adresse MAC destination, pour l'autre, l'adresse MAC source.
+
+3. Ces commandes permettent de savoir la configuration physique du réseau. 
+La couche concernée est la couche physique.Duplex : FULL / Speed : 100Mb/s
+
+4. Avec mii-tool, la commande a pris du temps à s'exécuter, et ça renvoi "No link" pour eth0 à présent. Avec ifconfig -a eth0 n'est plus en running
+
+5. On utilise un câble croisé (ici de couleur blanche) afin de connecter les deux ordinateurs
+Du fait que les réseaux ne soient pas correctement configurés, on utilise la connexion eth0
+afin de pinger les deux machines.
+
+
+=============
+CONCENTRATEUR
+=============
+1. On constate que le ping de la machine A vers C est aussi intercepté par la machine B (Celle qui ne reçoit aucun ping).
+
+Cet équipement consiste donc à partager un réseau (Broadcast) qui est commun à tous les postes connectés (contrairement à un switch qui filtre).
+
+Les données envoyées depuis un poste A sont reçues par ce même poste. Cependant, wireshark n'intercepte rien.
+
+2. Cela sert à intercepter tout ce qui passe sur notre réseau (même si ça ne nous est pas destiné).
+
+3. Le mode est half-duplex. Il partage sur un fil identique l'envoi et la reception des paquets,
+évitant l'emission et la reception en simultané.
+
+4. La typologie est en étoile, car un hub et entre les machines (on peut donc dire que ça ressemble à un bus).
+Physique : étoile
+Logique : bus
+
+5. On observe que un hub divise la bande passante en fonction du nombre de postes connectés au réseau, puisque le réseau est partagé entre les machines.
+Il y a donc plus de collisions pour accéder au réseau.
+Avec 3 postes : 5Mbits/s et 595 de valeur de collisions.
+Avec 4 postes : 4,5Mbits/s et 1284 de valeur de collisions.
+
+===========
+COMMUTATEUR
+===========
+1. Le mode promiscous ne permet pas d'interpecter les paquets entre deux machines.
+
+1.2 Même chose si mode est désactivé.
+
+1.3 Le mode est full-duplex. Il consiste à partager sur un fil l'envoi et sur un autre fil la réception.
+
+1.4 La topologie est toujours en étoile.
+
+1.5 Le nombre de collisions n'a pas changé, la bande-passante non plus entre 2 et 4 postes.
+Un Switch ne divise pas la bande passante en fonction du nombre de postes connectés au réseau (grâce au mode full-duplex).
+Il n'y a pas de collision à gérer. (plus sécurisé?)
+
+2. Lorsque le switch reçoit une trame, il vérifie si l'adresse MAC est présente ou non dans sa table d'adresses. Si elle n'est pas présente, il l'a rajoute. 
+Lorsque le switch doit envoyer une trame à une adresse MAC inconnue, il envoie ce paquet à tous les postes connectés sur le réseau, il récupère ainsi l'adresse MAC des postes grâce à leurs réponses. 
+
+
+3. Il n'a pas forcément besoin de l'adresse MAC, car il peut l'obtenir par lui-même. 
+Il a besoin de connaître l'adresse IP des paquets, afin d'envoyer le paquet au bon destinataire.
+
+Les hubs, agissent au niveau 1 du modèle OSI (Physique) et les unités de données qu'ils transportent sont des bits.
+Les switchs agissent au niveau 2 du modèle OSI (Liaison) et les unités de données qu'ils transportent sont des trames.
+
+4. Les switchs sont plus sécurisés que les hubs, car les trames envoyées ne peuvent pas être interceptées par les autres machines connectées au réseau (aucune différence entre mode promiscious on et off).
+
+De plus, avec un hub, le débit est partagé entre toutes les machines du réseau, ce qui peut saturer et réduire les performances de ce dernier, contrairement au switch.
+
+Enfin, il n'y a pas de collision avec un switch, alors qu'il y en a avec le un hub. 
+
+5. Le poste qui envoie à l'adresse 192.168.5.255 reçoit une réponse de tous les postes du réseau.
+Il s'agit d'un transfert en broadcast (diffusion sur tout le réseau).
+
+=======
+ROUTEUR
+=======
+
+6. Poste 1 -> Post 2 : ttl = 64
+   Poste 1 -> Post 3 : ttl = 63
+
+Différence de 1 car pour le poste 3 on doit passer par le routeur.
+
+1 décrémentation du TTL veut dire qu'il y a 1 passerelle.
+
+On peut donc gérer la portée d'un pacquet en fonction du nombre de passerelles.
+
+7. Pour que le poste 1 puisse communiquer avec le poste 2 mais pas le 3 il faut un TTL = 1.
+
+
+On voit que le poste 3 ne revoie rien vers le 1 car il a été détruit avant qu'il le reçoive.
+Et le routeur renvoie au poste 1 un paquet pour dire que le paquet d'origine a été détruit.
+
+8. //
+
+9. L'adresse IP de la trame Ethernet n'appartient pas au réseau local.
+Elle est donc utilisé par défaut pour envoyer les paquets à l'extérieur.
+
+10.
+
+Applications |								 | Applications
+Présentation |								 | Présentation
+Session      |								 | Session
+Transport    |				      _________		         | Transport
+Réseau       |		 _________	      |Réseau   |	    	 | Réseau
+Liaison      |		|Liaison  |	      |Liaison  |		 | Liaison
+Physique      --->--- Physique  ------>------ Physique  ------>------  Physique
+
+Machine 1              Switch                  Routeur                 Machine 2
+
+
+11. connect: Network is unreachable
+
+12. Les paquets sont captés par les postes du réseau 192.168.1.0
+	Adresses contenues du paquets:
+	Destination : Broadcast (ff:ff:ff:ff:ff:ff)
+	Source:	      Cisco_81:82:c2(00:10:7b:81:81:c2)
+
+13. Rien ne change.
+
+14. La diffusion limitée limite la transmission aux hôtes du réseau local.
+
+La diffusion dirigée permet la transmission à tous les hôtes d'un réseau particulier (qui n'est pas forcément locale).
+ 
+L'unicast est une transmission vers un seul hôte.
+
+15. Les routeurs sont les limites d'un domaine de diffusion. Donc les paquets transmis en diffusion limitée sera détruit si il passe par un routeur.
+
+Pour la diffusion dirigée, les routeurs envoyent les paquets vers le réseau cible.
+Mais une configuration est necessaire car ça n'est pas possible par défaut.
+
+Pour l'unicast c'est simplement envoyé vers le l'hôte cible. 
+
+Les routeurs effectuent bien la transmission entre deux ou plusieurs réseaux.
+L'unicast est effectué par défaut.
+La diffusion dirigée doit être configurée par soucis de sécurité.
+
+===
+ARP
+===
+
+1. //
+
+2. Le cache ARP s'occupe de la correspondante entre les adresses IP et MAC des hôtes qui ont été contacté récemment.
+Si les adresses ne sont plus utilisées, après un délai, elles seront supprimées.
+
+3. Notre machine a fait une requête ARP avec l'adresse IP de l'hôte voisin et reçoit la réponse du voisin contenant son adresse MAC.
+
+4. 0x0800
+
+5. L'adresse MAC de l'hôte cible.
+
+6. Src: Dell_bb:7f:6f (98:90:96:bb:7f:6f)
+
+7. paquet ARP < paquet ethernet, pour respecter la taille du paquet, il est remplit avec des 0 et des motifs répétitifs.
+
+
+
+

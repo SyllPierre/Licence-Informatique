@@ -1,0 +1,8 @@
+q1)
+articles(_,X,_).
+
+q2) articles(_,X,'blue').
+
+q3) articles(_,X,'blue'),catalogue(X,Y,_),fournisseurs(Y,_,_).
+
+q4)articles(X,Y,_),catalogue(Z,X,_),fournisseurs(Z,'kiventout',_).

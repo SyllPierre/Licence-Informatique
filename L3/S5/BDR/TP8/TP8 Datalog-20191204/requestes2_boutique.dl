@@ -1,0 +1,29 @@
+q5)%articles que kiventout vends
+venduparkiventout(Anom)
+:- articles(Anom,Aid,_),catalogue(Fid,Aid,_),fournisseurs(Fid,'kiventout',_).
+
+
+q6)coulrare(C) :- group_by(articles(A,N,C),
+	 [C],
+	 R=count,R=1
+	 ).
+
+q7)%fournisseurs d'au moins 2 articles rouges
+   % Selectionnner les articles rouges
+   art_rouge(Anom)
+     :- articles(Aid,Anom,Acoul),Acoul='rouge'.
+
+		 deuxrouges(X) :- group_by(catalogue(fid,_,art_rouge(Anom),
+	 		 [fid],
+	 		 R=count,R>2
+	 		 ),fournisseurs(fid,X,_).
+
+q8)%fournisseurs bon marche
+% Selectionnner les articles a moins de 10€
+art_bonmarche(Fid,Anom)
+	:- articles(Aid,Anom,_),catalogue(Fid,_,prix),prix<10.
+
+bonmarche(X) : - group_by(art_bonmarche(Fid,Anom),
+	[Fid],
+	R=count,R>2
+	),fournisseurs(fid,X,_).

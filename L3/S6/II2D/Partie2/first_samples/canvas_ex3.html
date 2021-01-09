@@ -1,0 +1,31 @@
+<html>
+  <body>
+    <canvas id="input" width="320" height="240"/><br/>
+    <script type="text/javascript">
+
+      var canvas = document.getElementById("input");
+      var ctx2d = canvas.getContext("2d");
+      var width = canvas.width, height = canvas.height;
+
+      //BLOC1
+      //On récupére une partie de l'image du canvas qui correspond
+      //à une zone de la moitié de la taille du canvas qui se trouve au quart de la hauteur et de la largeur du canvas.
+      var imgData = ctx2d.getImageData(width/4,height/4,width/2,height/2);
+      var pixels = imgData.data;
+
+      //BLOC2
+      //Pour chaque pixel appartenant à l'image.
+      //On change la valeur rouge en fonction de la position du pixel sur x.
+      //On change le taux d'opacité en fonction de la position du pixel sur y.
+      for (var x = 0; x < imgData.width; x++) {
+        for (var y = 0; y < imgData.height; y++) {
+          var pos_pixel_dans_vector = (y * imgData.width + x)<<2;
+          pixels[pos_pixel_dans_vector + 2] = (255 * x) / imgData.width;
+          pixels[pos_pixel_dans_vector + 3] = (255 * y) / imgData.height;
+        }
+      }
+
+      ctx2d.putImageData(imgData,width/4,height/4);
+      </script>
+    </body>
+  </html>

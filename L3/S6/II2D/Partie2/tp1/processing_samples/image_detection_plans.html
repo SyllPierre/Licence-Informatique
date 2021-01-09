@@ -1,0 +1,32 @@
+<html>
+<head>
+<script lang="js" src="../tools.js"></script>
+<script lang="js" src="../features/pixels.js"></script>
+<script lang="js" src="../features/plans.js"></script>
+<script lang="js" src="../processing.js"></script>
+</head>
+<body>
+  <video id="input2" src="../data/surprise.mp4" width="320" height="180" autoplay></video>
+
+  <br></br>
+  <div id="output2" style="display:inline-block;"></div>
+
+  <script lang="javascript">
+    var _output2=document.getElementById("output2");
+    var _opt_options2={x:100,y:100,output:_output2};
+    var _task2=new DetectionPlansTask(_opt_options2)
+    var _proc2=new processing("input2",_task2);
+    var videoElt = document.getElementById("input2");
+
+    videoElt.addEventListener("playing",function() {
+        loop();
+    });
+
+    var loop=function() {
+      _proc2.do_process();
+
+      requestAnimationFrame(loop);
+    }
+  </script>
+</body>
+</html>

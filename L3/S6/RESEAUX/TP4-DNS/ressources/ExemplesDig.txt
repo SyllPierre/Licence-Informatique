@@ -1,0 +1,359 @@
+# Quelques tests de "dig" (ou "nslookup") en utilisant ce serveur DNS @193.49.225.15
+# 
+
+
+
+
+
+noe@a11p26:~$ dig @193.49.225.15 www.lifl.fr
+
+; <<>> DiG 9.11.3-1ubuntu1.3-Ubuntu <<>> @193.49.225.15 www.lifl.fr
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 21881
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 3
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;www.lifl.fr.			IN	A
+
+;; ANSWER SECTION:
+www.lifl.fr.		21600	IN	CNAME	proxy-public.lifl.fr.
+proxy-public.lifl.fr.	21600	IN	A	193.48.186.120
+
+;; AUTHORITY SECTION:
+lifl.fr.		172800	IN	NS	reserv2.univ-lille1.fr.
+lifl.fr.		172800	IN	NS	reserv1.univ-lille1.fr.
+
+;; ADDITIONAL SECTION:
+reserv1.univ-lille1.fr.	21600	IN	A	193.49.225.15
+reserv2.univ-lille1.fr.	21600	IN	A	193.49.225.90
+
+;; Query time: 0 msec
+;; SERVER: 193.49.225.15#53(193.49.225.15)
+;; WHEN: Fri Feb 08 15:41:57 CET 2019
+;; MSG SIZE  rcvd: 171
+
+
+
+
+
+
+
+noe@a11p26:~$ dig @193.49.225.15 fr
+
+; <<>> DiG 9.11.3-1ubuntu1.3-Ubuntu <<>> @193.49.225.15 fr
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 11276
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;fr.				IN	A
+
+;; AUTHORITY SECTION:
+fr.			5400	IN	SOA	nsmaster.nic.fr. hostmaster.nic.fr. 2225154869 3600 1800 3600000 5400
+
+;; Query time: 5 msec
+;; SERVER: 193.49.225.15#53(193.49.225.15)
+;; WHEN: Fri Feb 08 15:52:11 CET 2019
+;; MSG SIZE  rcvd: 91
+
+
+
+noe@a11p26:~$ dig @193.49.225.15  example.org
+
+; <<>> DiG 9.11.3-1ubuntu1.11-Ubuntu <<>> @193.49.225.15 example.org
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 46777
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;example.org.			IN	A
+
+;; ANSWER SECTION:
+example.org.		83927	IN	A	93.184.216.34
+
+;; AUTHORITY SECTION:
+example.org.		83927	IN	NS	b.iana-servers.net.
+example.org.		83927	IN	NS	a.iana-servers.net.
+
+;; Query time: 0 msec
+;; SERVER: 193.49.225.15#53(193.49.225.15)
+;; WHEN: Sat Jan 18 11:56:44 CET 2020
+;; MSG SIZE  rcvd: 104
+
+
+
+noe@a11p26:~$ dig @193.49.225.15 www.google.com
+
+; <<>> DiG 9.11.3-1ubuntu1.3-Ubuntu <<>> @193.49.225.15 www.google.com
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 30653
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 4, ADDITIONAL: 9
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;www.google.com.			IN	A
+
+;; ANSWER SECTION:
+www.google.com.		134	IN	A	172.217.18.228
+
+;; AUTHORITY SECTION:
+google.com.		150682	IN	NS	ns2.google.com.
+google.com.		150682	IN	NS	ns4.google.com.
+google.com.		150682	IN	NS	ns1.google.com.
+google.com.		150682	IN	NS	ns3.google.com.
+
+;; ADDITIONAL SECTION:
+ns1.google.com.		325111	IN	A	216.239.32.10
+ns2.google.com.		325111	IN	A	216.239.34.10
+ns3.google.com.		325111	IN	A	216.239.36.10
+ns4.google.com.		325111	IN	A	216.239.38.10
+ns1.google.com.		337409	IN	AAAA	2001:4860:4802:32::a
+ns2.google.com.		333608	IN	AAAA	2001:4860:4802:34::a
+ns3.google.com.		337409	IN	AAAA	2001:4860:4802:36::a
+ns4.google.com.		1817	IN	AAAA	2001:4860:4802:38::a
+
+;; Query time: 0 msec
+;; SERVER: 193.49.225.15#53(193.49.225.15)
+;; WHEN: Fri Feb 08 15:42:07 CET 2019
+;; MSG SIZE  rcvd: 307
+
+
+
+
+
+
+
+noe@a11p26:~$ dig @193.49.225.15 com
+
+; <<>> DiG 9.11.3-1ubuntu1.3-Ubuntu <<>> @193.49.225.15 com
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 10518
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;com.				IN	A
+
+;; AUTHORITY SECTION:
+com.			893	IN	SOA	a.gtld-servers.net. nstld.verisign-grs.com. 1549637296 1800 900 604800 86400
+
+;; Query time: 0 msec
+;; SERVER: 193.49.225.15#53(193.49.225.15)
+;; WHEN: Fri Feb 08 15:48:45 CET 2019
+;; MSG SIZE  rcvd: 105
+
+
+
+
+
+
+
+
+
+
+noe@a11p26:~$ dig @193.49.225.15 
+
+; <<>> DiG 9.11.3-1ubuntu1.3-Ubuntu <<>> @193.49.225.15
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 35240
+;; flags: qr rd ra; QUERY: 1, ANSWER: 13, AUTHORITY: 0, ADDITIONAL: 23
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;.				IN	NS
+
+;; ANSWER SECTION:
+.			323459	IN	NS	a.root-servers.net.
+.			323459	IN	NS	h.root-servers.net.
+.			323459	IN	NS	i.root-servers.net.
+.			323459	IN	NS	l.root-servers.net.
+.			323459	IN	NS	j.root-servers.net.
+.			323459	IN	NS	g.root-servers.net.
+.			323459	IN	NS	m.root-servers.net.
+.			323459	IN	NS	c.root-servers.net.
+.			323459	IN	NS	f.root-servers.net.
+.			323459	IN	NS	b.root-servers.net.
+.			323459	IN	NS	d.root-servers.net.
+.			323459	IN	NS	e.root-servers.net.
+.			323459	IN	NS	k.root-servers.net.
+
+;; ADDITIONAL SECTION:
+a.root-servers.net.	496283	IN	A	198.41.0.4
+b.root-servers.net.	432773	IN	A	199.9.14.201
+c.root-servers.net.	432773	IN	A	192.33.4.12
+d.root-servers.net.	432773	IN	A	199.7.91.13
+e.root-servers.net.	432773	IN	A	192.203.230.10
+f.root-servers.net.	432773	IN	A	192.5.5.241
+g.root-servers.net.	432773	IN	A	192.112.36.4
+h.root-servers.net.	432773	IN	A	198.97.190.53
+i.root-servers.net.	432773	IN	A	192.36.148.17
+j.root-servers.net.	432773	IN	A	192.58.128.30
+k.root-servers.net.	432773	IN	A	193.0.14.129
+l.root-servers.net.	432773	IN	A	199.7.83.42
+m.root-servers.net.	432773	IN	A	202.12.27.33
+a.root-servers.net.	432773	IN	AAAA	2001:503:ba3e::2:30
+d.root-servers.net.	497872	IN	AAAA	2001:500:2d::d
+e.root-servers.net.	497596	IN	AAAA	2001:500:a8::e
+f.root-servers.net.	432773	IN	AAAA	2001:500:2f::f
+g.root-servers.net.	497596	IN	AAAA	2001:500:12::d0d
+h.root-servers.net.	432773	IN	AAAA	2001:500:1::53
+j.root-servers.net.	432773	IN	AAAA	2001:503:c27::2:30
+k.root-servers.net.	432773	IN	AAAA	2001:7fd::1
+m.root-servers.net.	432773	IN	AAAA	2001:dc3::35
+
+;; Query time: 0 msec
+;; SERVER: 193.49.225.15#53(193.49.225.15)
+;; WHEN: Fri Feb 08 15:42:27 CET 2019
+;; MSG SIZE  rcvd: 699
+
+
+
+
+
+
+
+
+
+noe@a11p26:~$ dig @193.49.225.15 -x 192.42.177.30
+
+; <<>> DiG 9.11.3-1ubuntu1.3-Ubuntu <<>> @193.49.225.15 -x 192.42.177.30
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 65209
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 7
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;30.177.42.192.in-addr.arpa.	IN	PTR
+
+;; ANSWER SECTION:
+30.177.42.192.in-addr.arpa. 86389 IN	PTR	av1.nstld.com.
+
+;; AUTHORITY SECTION:
+177.42.192.in-addr.arpa. 86389	IN	NS	a2.verisigndns.com.
+177.42.192.in-addr.arpa. 86389	IN	NS	a1.verisigndns.com.
+177.42.192.in-addr.arpa. 86389	IN	NS	a3.verisigndns.com.
+
+;; ADDITIONAL SECTION:
+a1.verisigndns.com.	1477	IN	A	209.112.113.33
+a2.verisigndns.com.	1477	IN	A	209.112.114.33
+a3.verisigndns.com.	1477	IN	A	69.36.145.33
+a1.verisigndns.com.	1477	IN	AAAA	2001:500:7967::2:33
+a2.verisigndns.com.	1477	IN	AAAA	2620:74:19::33
+a3.verisigndns.com.	1477	IN	AAAA	2001:502:cbe4::33
+
+;; Query time: 0 msec
+;; SERVER: 193.49.225.15#53(193.49.225.15)
+;; WHEN: Fri Feb 08 15:51:11 CET 2019
+;; MSG SIZE  rcvd: 277
+
+
+
+
+
+
+
+
+
+================================================
+Rien a voir avec le DNS / test du protocole HTTP
+================================================
+
+
+noe@a11p26:~$ telnet example.org 80
+GET / HTTP/1.1
+Host:example.org
+
+
+
+
+
+
+
+HTTP/1.1 200 OK
+Age: 325072
+Cache-Control: max-age=604800
+Content-Type: text/html; charset=UTF-8
+Date: Sat, 18 Jan 2020 11:02:54 GMT
+ETag: "3147526947+gzip+ident"
+Expires: Sat, 25 Jan 2020 11:02:54 GMT
+Last-Modified: Thu, 17 Oct 2019 07:18:26 GMT
+Server: ECS (bsa/EB24)
+Vary: Accept-Encoding
+X-Cache: HIT
+Content-Length: 1256
+X-Cache: MISS from vmcache-dev
+X-Cache-Lookup: MISS from vmcache-dev:3128
+Via: 1.1 vmcache-dev (squid/3.5.23)
+Connection: keep-alive
+
+<!doctype html>
+<html>
+<head>
+    <title>Example Domain</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">
+    body {
+        background-color: #f0f0f2;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        
+    }
+    div {
+        width: 600px;
+        margin: 5em auto;
+        padding: 2em;
+        background-color: #fdfdff;
+        border-radius: 0.5em;
+        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
+    }
+    a:link, a:visited {
+        color: #38488f;
+        text-decoration: none;
+    }
+    @media (max-width: 700px) {
+        div {
+            margin: 0 auto;
+            width: auto;
+        }
+    }
+    </style>    
+</head>
+
+<body>
+<div>
+    <h1>Example Domain</h1>
+    <p>This domain is for use in illustrative examples in documents. You may use this
+    domain in literature without prior coordination or asking for permission.</p>
+    <p><a href="https://www.iana.org/domains/example">More information...</a></p>
+</div>
+</body>
+</html>
+

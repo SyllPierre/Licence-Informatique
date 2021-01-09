@@ -1,0 +1,104 @@
+Q2 : oui
+Q4 : oui
+Q5 : oui
+Q9 : oui
+Q10 : oui
+Q11 : oui
+Q12 : non
+
+Question 2 :
+------------
+select max(age) from (select age from etudiants where programme = 'Histoire' union select age from etudiants natural join participer natural join cours natural join profs where prof_nom like 'I. Boulala') as ages;
+
+Question 3 :
+------------
+Nous devions corriger la 12 :
+
+
+Question 4 :
+------------
+Q5 :
+select distinct e_nom
+from etudiants join participer using(e_id) join cours as c1 using(c_id)
+where exists(select c2.c_id from cours as c2 where c1.c_id != c2.c_id and c1.horaire=c2.horaire);
+
+Q6 :
+select E.e_nom
+from Etudiants E
+where not exists(select p.e_id from participer p join etudiants using(e_id) where p.e_id=E.e_id);
+
+Q11 :
+select distinct e_nom
+from etudiants as e1
+where exists(select e_nom
+	from etudiants as e2 join participer using(e_id) join cours using(c_id)
+	where e1.e_id=e2.e_id
+	group by e_nom
+	having bool_and(horaire not like '%Lu%'));
+
+
+Question 5 :
+------------
+select max(price) from catalogue;
+
+Question 6 :
+------------
+select anom, price
+from articles join catalogue using(aid)
+where price >= all(select price from catalogue);
+
+Question 7 :
+------------
+select fnom, price
+from articles join catalogue using(aid) join fournisseurs using(fid) 
+where price >= all(select price from catalogue);
+
+Question 8 :
+------------
+select anom, count(distinct fid) as nbfournisseurs, max(price) as maxprice, min(price) as minprice
+from articles left join catalogue using(aid)
+where fid is not null group by aid having count(distinct fid)>1;
+
+Question 9 :
+------------
+select acoul
+from articles join catalogue using(aid)
+group by acoul having count(*)=1;
+
+Question 10 :
+------------
+select anom, couleur, count(distinct fid) as nbfournisseurs
+from articles left join catalogue using(aid) join fournisseurs using(fid)
+where fid is not null
+group by anom,couleur;
+
+Question 11 :
+------------
+select anom, count(distinct fid) as nbfournisseurs
+from articles left join catalogue using(aid)
+group by anom;
+
+Question 12 :
+------------
+select fnom as FOURNISSEUR, count(distinct anom) as NB_A
+from articles left join catalogue using(aid) join fournisseurs using(fid)
+group by fnom
+having count(distinct anom)>1;
+
+Question 13 :
+------------
+select fnom,anom
+from articles join catalogue using(aid) join fournisseurs using(fid)
+group by fnom, anom
+having count(distinct couleur)>1;
+
+Question 14 :
+------------
+select anom
+from articles join catalogue using(aid)
+group by anom
+having count(distinct fid)=1;
+
+Question 15 :
+------------
+select upper(substring(couleur,1,1)) as c,count(aid) from articles group by c order by c asc;

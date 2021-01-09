@@ -1,0 +1,48 @@
+# TP4
+# SYLLEBRANQUE Pierre, DESMAREST Mathilde
+
+Question 1.
+select e_id, horaire from Cours natural join Participer where horaire like '%Lu%'
+
+Question 2.
+select round(avg(age),2), count(e_id), niveau from Etudiants group by niveau
+
+Question 3.
+select e_nom from Etudiants natural join Cours natural join Participer natural join Profs where niveau='Licence 3' and prof_nom='I. Boulala'
+
+Question 4.
+select max(age) from Etudiants natural join Profs natural join Cours natural join Participer where prof_nom='I. Boulala' or programme='Histoire'
+
+Question 5.
+select e_nom, count(c_id), horaire from Participer natural join Cours natural join Etudiants where horaire is not NULL group by horaire, e_nom having count(c_id) > 1
+
+Question 6.
+select e_nom from Etudiants left join Participer on Etudiants.e_id=Participer.e_id where c_id is NULL
+
+select e_nom from Etudiants left join Participer using(e_id) where c_id is NULL
+
+select e_nom from Etudiants except (select e_nom from Etudiants natural join Participer where c_id > 0)
+
+Question 7.
+select round(avg(age),2) as age, niveau from Etudiants group by niveau having niveau not like 'Licence 1'
+
+Question 8.
+select titre, salle from Cours where salle='R128' union select titre, salle from Cours natural join Participer group by c_id having count(e_id) >= 5 order by titre
+
+Question 9.
+select * from
+(select prof_nom from Profs except (select prof_nom from Profs natural join Cours where salle<>'R128'))as t1
+natural join 
+(select prof_nom, count(c_id) from Profs natural join Cours group by prof_id)as t2
+
+Question 10.
+select e_nom from Etudiants natural join Participer natural join Cours group by e_id having count(c_id)=(select max(nb) from (select e_id, count(c_id) as nb from Etudiants natural join Cours natural join Participer group by e_id) as t1)
+
+Question 11.
+select e_nom from Etudiants natural join Participer natural join Cours group by e_id having count(c_id)>1
+except
+(select e_nom from Etudiants natural join Participer natural join Cours where horaire like '%Lu%')
+
+Question 12.
+create view vue as select c_id, count(e_id) as nbParticipant from Participer group by c_id;
+select round(avg(nbParticipant), 0), c_id from vue group by c_id;

@@ -1,0 +1,1 @@
+Première séance de POO, première utilisation de BlueJ

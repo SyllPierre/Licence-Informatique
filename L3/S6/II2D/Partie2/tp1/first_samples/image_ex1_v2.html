@@ -1,0 +1,43 @@
+<html>
+  <body>
+    <img id="input" src="../data/tambour.png" width="240" height="320"/>
+    <script type="text/javascript">
+
+      //BLOC1
+      /* Recupére l'élément html avec l'id input */
+      var imgElt = document.getElementById("input");
+
+      imgElt.onload=function(){
+
+        //BLOC2
+      /* Créé le canvas et définit sa taille à celle de imgElt */
+        var canvas = document.createElement("canvas");
+        canvas.width = imgElt.width; canvas.height = imgElt.height;
+
+        //BLOC3
+      /* Récupère le contexte et dessine l'image imgElt aux cordonnées (0,0)
+      et de taille (canvas.width, canvas.height)  */
+        var ctx2d = canvas.getContext("2d");
+        ctx2d.drawImage(imgElt, 0, 0, canvas.width, canvas.height);
+
+
+        //BLOC4
+      /* Récupère les données de l'image et stocke les pixels dans pixels  */
+        var imgData = ctx2d.getImageData(0, 0, canvas.width, canvas.height);
+        var pixels = imgData.data;
+
+        //BLOC5
+      /* Affiche les données du pixel à la position (50,50)  */
+        var x = 50; var y = 50;
+        var pos_pixel_dans_vector = (y * imgData.width + x)<<2;
+        var r = pixels[pos_pixel_dans_vector + 0];
+        var g = pixels[pos_pixel_dans_vector + 1];
+        var b = pixels[pos_pixel_dans_vector + 2];
+        var a = pixels[pos_pixel_dans_vector + 3];
+
+        alert("Pixel at ("+x+", "+y+") : ("+r+", "+g+", "+b+", "+a+")");
+      }
+
+      </script>
+    </body>
+  </html>

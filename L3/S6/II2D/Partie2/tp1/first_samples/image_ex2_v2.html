@@ -1,0 +1,51 @@
+<html>
+  <body>
+    <img id="input" src="../data/tambour.png" width="240" height="320"/>
+    <script type="text/javascript">
+
+      //BLOC1
+      /* Recupére l'élément html avec l'id input */
+      var imgElt = document.getElementById("input");
+
+      imgElt.onload=function(){
+
+        //BLOC2
+      /* Créé le canvas et définit sa taille à celle de imgElt */
+        var canvas = document.createElement("canvas");
+        canvas.width = imgElt.width; canvas.height = imgElt.height;
+
+        //BLOC3
+      /* Récupère le contexte et dessine l'image imgElt aux cordonnées (0,0)
+      et de taille (canvas.width, canvas.height) puis ajout du canvas à
+      la page pour que l'on puisse le voir */
+        var ctx2d = canvas.getContext("2d");
+        ctx2d.drawImage(imgElt, 0, 0, canvas.width, canvas.height);
+        document.body.append(canvas);
+        //BLOC4
+      /* Récupère les données de l'image (en ne prenant que le premier quart (haut gauche))
+       et stocke les pixels dans pixels  */
+        var imgData = ctx2d.getImageData(0, 0, canvas.width/2, canvas.height/2);
+        var pixels = imgData.data;
+
+        //BLOC5
+      /* Pour chaque pixel, attribue la moyenne des 3 composantes (rgb)
+      à chaque composante (rgb) dans le but d'obtenir un pixel en niveau de gris
+      et mise à jour du contexte */
+        for (var x = 0; x <imgData.width ; x++)
+          for (var y = 0; y<imgData.height; y++) {
+
+
+            var pos = (y * imgData.width + x)<<2;
+
+            var r = pixels[pos + 0], g = pixels[pos + 1], b = pixels[pos + 2], a = pixels[pos + 3];
+
+            var mean=(r+g+b)/3;
+
+            pixels[pos + 0] = mean;  pixels[pos + 1] = mean; pixels[pos + 2] = mean; pixels[pos + 3] = a;
+          }
+        ctx2d.putImageData(imgData,0,0);
+      }
+
+      </script>
+    </body>
+  </html>

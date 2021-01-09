@@ -1,0 +1,15 @@
+Donnez le nom de l'une des Totally Spies ? 
+Sam ; Clover ; Alex
+1
+Qui est l'ennemi de Clover ?
+Mandy
+2
+Les Totally Spies habitent en France ?
+non
+1
+Quelle est la couleur de la combinaison de Alex ?
+Jaune | Vert | Rouge
+3
+De combien de perspnnes est constitué le groupe des Totally Spies ?
+3
+1

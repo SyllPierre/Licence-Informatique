@@ -1,0 +1,22 @@
+/* Entete */
+digraph "arbre" {
+node [fontname="DejaVu-Sans", shape=circle] 
+
+ /* Liste des noeuds */
+a[color=Black, fontcolor=Black]
+b[color=Black, fontcolor=Black]
+c[color=Black, fontcolor=Black]
+d[color=Black, fontcolor=Black]
+e[color=Black, fontcolor=Black]
+f[color=Black, fontcolor=Black]
+g[color=Black, fontcolor=Black]
+h[color=Red, fontcolor=Red]
+ /* Liste des arcs */
+d -> b
+d -> f
+b -> a
+b -> c
+f -> e
+f -> g
+g -> h
+}

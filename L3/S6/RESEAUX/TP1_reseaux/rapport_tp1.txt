@@ -1,0 +1,65 @@
+DESMAREST Mathilde
+SYLLEBRANQUE Pierre
+
+Rapport TP1
+
+Pour faire tourner les programmes, nous avons utilisé le logiciel Eclipse Photon 4.8. Le programme se lance donc
+facilement avec la petite flèche verte "Run". Mais nous avons aussi lancé le terminal dans le bon dossier et exécuté
+les commandes énoncées dans le sujet.
+
+
+1. Protocole UDP
+Codes dans src/UdpMulticast : ReceiveUDP.java et SendUDP.java
+
+Le but de cet exercice est de réaliser un programme qui écoute sur un port UDP donné, et affiche les messages reçus 
+sous la forme de chaînes de caractères et un autre qui envoie un message donné sous forme de chaîne de caractères, 
+sur un port donné d'une machine donnée.
+
+Pour ces deux codes, nous nous sommes servis du cours d'introduction (slide 31:32).
+Ils sont commentés sur les lignes essentielles.
+
+On éxecute, après compilation, les commandes :
+
+- java ReceiveUDP 1500
+
+- java SendUDP ****** 1500 "you are welcome" 
+Il faut remplacer ****** par le numéro de poste sur lequel on travaille.
+
+
+2. Multicast UDP
+Codes dans src/UdpMulticast : ReceiveMulticastUDP.java et SendMulticastUDP.java
+
+Le but de cet exercice est de réaliser un programme ouvrant une connexion UDP Multicast sur l'adresse 224.0.0.1 port 7654. Tous les
+paquets reçus sont affichés à l'écran en les convertissant en chaînes de caractères. Et un deuxième un programme envoyant, à l'attention
+ des machines enregistrées sur l'adresse multicast 224.0.0.1 port 7654. un paquet UDP contenant un message quelconque.
+
+Question 1 :
+Pour émettre et recevoir un paquet UDP multicast sur le réseau local, il faut être capable de recevoir les datagrammes Multicast émis par 
+le serveur via le Socket identifié par la  paire (adresse IP, Port).
+
+Voir : https://www-npa.lip6.fr/~fourmaux/www-l2ti.univ-paris13.fr/~fourmaux/stages/routeurcisco/site%20web%20Cisco/multicast.htm
+
+Question 2 : 
+En traitant uniquement 'IOException', les programmes fonctionnent correctement.
+
+Les deux codes sont commentés.
+
+3. Programme de Tchat
+Codes dans src/UdpMulticast : ReceiveTchat.java SendTchat.java Tchat.java
+
+Le but de cet exercice est de réaliser un programme qui réunit les deux fonctions simultanément.
+
+Question 1 :
+Pour réaliser un client capable d'émettre et de recevoir des paquets UDP simultanément, il faut créer un nouveau thread contenant 
+les traitements à réaliser sur la socket.
+
+Question 2:
+Pour cette question, nous avons proposé cette solution :
+byte array[] = recv.getData();
+String res = new String(array);
+System.out.println("message de" + recv.getAddress().getHostName() + ": " + res);
+Les 3 codes sont commentés.
+
+Je n'ai pas fait le test avec le .getHostName() mais d'après la doc oracle cala doit fonctionner correctement.
+Si ce n'est pas le cas, enlever la ligne en question et mettez : 'System.out.println("message de : " + res);'.
+Dans ce cas, le nom de l'host ne s'affiche pas mais le message oui.

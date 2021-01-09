@@ -1,0 +1,48 @@
+<html>
+<head>
+<script lang="js" src="../tools.js"></script>
+<script lang="js" src="../processing2.js"></script>
+<script lang="js" src="../movement/difference.js"></script>
+<script lang="js" src="../effects/focus.js"></script>
+</head>
+<body>
+  <video autoplay loop src="../data/happy.mp4" id="input" width="320" height="180"></video>
+
+  <br/>
+  <canvas id="output1" width="320" height="180"></canvas>
+  <canvas id="output2" width="320" height="180"></canvas>
+  <canvas id="output3" width="320" height="180"></canvas>
+
+
+  <script lang="javascript">
+    var _opt_options={width:320,height:180,threshold:50};
+    var _task1=new diff.DifferenceImageGray(_opt_options);
+    var _proc1=new processing2("input",_task1,"output1");
+
+    var _opt_options={width:320,height:180,threshold:1};
+    var _task2=new diff.NormalizedDifferenceImageGray(_opt_options);
+    var _proc2=new processing2("input",_task2,"output2");
+
+    var _opt_options={width:320,height:180,threshold:50};
+    var _task3=new diff.ThresholdedDifferenceImageGray(_opt_options);
+    var _proc3=new processing2("input",_task3,"output3");
+
+    var video_elt=document.getElementById("input");
+    video_elt.addEventListener("loadeddata",function(){
+      _task1.set_first_frame_from_eltId("input");
+    });
+
+    var loop=function() {
+
+      _proc1.do_process();
+      _proc2.do_process();
+      _proc3.do_process();
+
+
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+  </script>
+</body>
+</html>

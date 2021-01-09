@@ -1,0 +1,71 @@
+TP1 BDR: RA
+DESMAREST Mathilde
+SYLLEBRANQUE Pierre
+Groupe 6
+
+
+Exercice 1:
+1. project[fnom](fournisseurs);
+
+2. select[fad='Paris'](fournisseurs);
+
+3. project[fnom](select[fad='Paris'](fournisseurs));
+
+4. project[anom](select[acoul='vert'](articles));
+
+5. project[aid](select[prix<20](catalogue));
+
+6. project[fid](select[prix<20](catalogue));
+
+7. project[fid](select[prix<=20 and prix>=10](Catalogue));
+
+8. project[fid](select[prix>=10](Catalogue)) intersect project[fid](select[prix<=20](Catalogue));
+
+9. project[aid](select[acoul='rouge'](articles)) union project[aid](select[acoul='vert'](articles));
+
+10. Impossible, une seule couleur est possible. Donc l'énoncé doit être rouges ou verts.
+project[aid](select[acoul='rouge'](articles)) union project[aid](select[acoul='vert'](articles));
+
+11. project[anom](select[acoul='rouge'](articles)) minus project[anom](select[acoul='argente'](articles));
+
+
+
+Exercice 3:
+1. project[anom](Articles join catalogue);
+
+2. project[anom,prix,fnom](Articles join Catalogue join fournisseurs);
+
+3. project[fid](select[acoul='rouge'](catalogue join articles));
+
+4. project[fnom](select[prix<20](fournisseurs join catalogue));
+
+5. project[fid](select[prix>10000](fournisseurs join catalogue) minus select[prix<10000](fournisseurs join catalogue));
+
+6. project[fnom,fad](select[prix>1000](fournisseurs join catalogue) minus select[prix<1000](fournisseurs join catalogue));
+
+7. project[aid](select[acoul='vert'](articles)) times project[aid](select[acoul='rouge'](articles));
+
+8. project[aid](articles) minus project[aid](catalogue);
+
+9. project[anom]((project[aid](articles) minus project[aid](catalogue)) join articles);
+
+10. project[fid](select[acoul='rouge'](catalogue join articles)) intersect project[fid](select[acoul='vert'](catalogue join articles));
+
+11. project[fnom](select[acoul='noir'](articles join catalogue join fournisseurs));
+
+12. project[aid1,fid1](select[aid1=aid2 and fid1<>fid2](rename[aid1,fid1](project[aid,fid](catalogue)) times rename[aid2,fid2](project[aid,fid](catalogue))));
+
+13. 
+Dans le TD il est demandé de donner les noms mais le resultat attendu concerne les ID, je donne donc les 2 possibilitées :
+
+Pour les noms:
+
+project[fnom](fournisseurs) minus (project[fnom]((project[aid](catalogue) minus (project[aid](articles minus (select[acoul='noir'](articles)) union (select[acoul='argente' ](articles))))) join Catalogue join fournisseurs));
+
+Pour les ID:
+
+project[fid](fournisseurs) minus (project[fid]( (project[aid](catalogue) minus (project[aid](articles minus (select[acoul='noir' ](articles)) union (select[acoul='argente' ](articles))))) join Catalogue));
+
+
+
+

@@ -1,0 +1,127 @@
+# BDR
+# SYLLEBRANQUE Pierre, DESMAREST Mathilde
+
+Exercice 1 :
+
+1.1) Pour l'insertion des valeurs dans la table il faut d'abord insérer celles de la table Articles et Fournisseurs puis celles de la table Catalogue afin de respecter les contraintes sur les Foreign Key.
+
+1.2)
+select * from information_schema.table_constraints;
+
+Cette requête SQL nous donne les informations sur quelles valeurs dans quelles tables sont Primary Key ou Foreign Key ou non.
+
+1.3)
+insert into catalogue values (4,5,100000000.00);
+
+ERREUR:  champ numérique en dehors des limites
+DETAIL:  Un champ de précision 10 et d'échelle 2 doit être arrondi à une valeur
+absolue inférieure à 10^8.
+
+1.4)
+insert into Articles values (1, 'Socks', 'kaki');
+
+ERREUR:  la valeur d'une clé dupliquée rompt la contrainte unique « articles_pkey »
+DETAIL:  La clé « (aid)=(1) » existe déjà.
+
+1.5)
+alter table Catalogue add check(price > 0);
+
+insert into Catalogue values(8,4,-20.54);
+
+ERREUR:  la nouvelle ligne de la relation « catalogue » viole la contrainte de vérification « catalogue_price_check »
+DETAIL:  La ligne en échec contient (8, 4, -20.54)
+
+1.6)
+delete from Articles where aid=1;
+
+Cette commande fonctionne car dans la création de notre table nous avons mis "on delete cascade", donc lors de la suppression d'un article il est supprimé également du catalogue. Si nous n'avions précisé ce "on delete" la suppression n'aurait pas pu se faire à cause de la Foreign Key.
+
+Exercice 2 :
+
+1.1)
+select fnom as fournisseur, fadresse as adresse from Fournisseurs;
+
+1.2)
+select fid from Catalogue where price>10 and price < 20;
+
+1.3)
+select anom from (Articles natural join Catalogue) where (Articles.couleur='rouge' or Articles.couleur='vert') and Catalogue.price < 20;
+
+1.4)
+select max(price), min(price) from Catalogue;
+
+1.5)
+(select fid from Catalogue natural join Articles where couleur='magenta') intersect (select fid from Catalogue natural join Articles where couleur='argente');
+
+1.6)
+select a.aid as rouge, b.aid as vert from Articles as a, Articles as b where a.couleur='rouge' and b.couleur='vert';
+
+1.7)
+select fnom from Fournisseurs except (select fnom from Fournisseurs natural join Catalogue natural join Articles where couleur='argente' or couleur='noir');
+
+1.8)
+select fnom, fadresse from Fournisseurs except (select fnom, fadresse from Fournisseurs natural join Catalogue where price<1000);
+
+1.9)
+select distinct aid from Catalogue;
+
+1.10)
+select count(aid) from Articles;
+
+1.11)
+select count(aid) from Catalogue;
+
+1.12)
+select count(distinct aid) from Catalogue;
+
+1.13)
+Le nombre d'articles fournissables est égal au nombre de lignes du catalogue lorsque chaque article du catalogue est fournissable par un unique fournisseur;
+
+1.14)
+select count(distinct couleur) from Articles;
+
+Exercice 3 :
+1.1)
+select distinct fid from catalogue natural join articles where articles.couleur='rouge';
+
+1.2)
+select round(avg(c.price), 2) from catalogue as c inner join articles as a on c.aid=a.aid where a.couleur='rouge';
+
+select round(avg(catalogue.price), 2) from catalogue, articles where catalogue.aid=articles.aid and articles.couleur='rouge';
+
+1.3)
+select f.fid from fournisseurs as f left join catalogue as c on f.fid=c.fid where c.fid is null;
+
+1.4)
+select a.aid from articles as a left join catalogue as c on a.aid=c.aid where c.aid is null;
+
+1.5)
+select aid from articles except select aid from catalogue;
+
+Exercice 4 :
+1.1)
+select upper(fnom)from fournisseurs;
+
+1.2)
+select fid, aid, ceil(price) as PRIX_ROND from catalogue;
+
+1.3)
+select fnom from fournisseurs where lower(fadresse) like'%paris';
+
+1.4)
+select fnom from fournisseurs where lower(fnom) like '%i%e%' and lower(fnom) like '%i%e%';
+
+1.5)
+select fnom from fournisseurs where lower(fnom) like '%a%';
+
+
+
+
+
+
+
+
+
+
+
+

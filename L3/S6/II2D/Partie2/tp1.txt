@@ -1,0 +1,23 @@
+Questions :
+
+Q4 : On a une alerte puis l'image se charge.
+L'alerte ne changera donc jamais à cause du fonctionnement asynchrome de HTML et JS.
+
+Q5 :  On récupère bien un pixel d'une autre couleur. 
+Grace a la fonction onload. En effet, les instructions seront effectués après que l'image ait chargé.
+
+Q6 : On voit qu'on ne peut pas modifier l'image puisque les modifications sont appliqués avant que l'image soit chargé completement.
+
+Q7 : Comme la question 5 on a chargé d'abord l'image et on attends que l'image est complentement chargé grâce à 
+l'evenement .onload et après on a appliqué les modifications par exemple copié l'image (document.body.append(canvas)).
+
+Q8. En exécutant le code nous avons la vidéo qui se lance.
+
+Q9: On remarque ici que seulement une image a été dessinée dans le canvas. 
+En effet le code qui récupère les données est intégré dans un listener qui n'est lancé qu'à la lecture et donc récupére que la première image.
+
+Q10:  On remarque que dans le canvas chaque image est modifiée avec un rectangle en nuances de gris. 
+La v3 intègre le code dans une boucle infinie qui est rappelée a chaque fin de traitement grâce a la méthode "requestAnimationFrame".
+
+
+

@@ -1,0 +1,129 @@
+# BDR TP5
+# Syllebranque Pierre, Desmarest Mathilde
+
+
+Question 1.
+select aid, acoul from Articles as A1 where not exists (select aid, acoul from Articles as A2 where A1.acoul=A2.acoul and A1.aid<>A2.aid) order by A1.aid;
+
+select acoul from Articles group by acoul having count(acoul)=1 order by acoul;
+
+Question 2.
+Group by et having :
+select anom from Articles group by anom having bool_or(acoul='rouge') and not bool_or(acoul='vert') order by anom;
+select anom from Articles group by anom having bool_or(acoul='rouge') and bool_and(acoul<>'vert') order by anom;
+
+Exists:
+select anom from Articles as A1 where acoul='rouge' and not exists (select anom from Articles as A2 where acoul='vert' and A1.anom=A2.anom) order by anom;
+
+All/Some :
+select anom from Articles where acoul='rouge' and anom<>all(select anom from Articles where acoul='vert') order by anom;
+
+In : 
+select anom from Articles where acoul='rouge' and not anom in(select anom from Articles where acoul='vert') order by anom;
+
+Question 3.
+select fnom, aid, prix from Fournisseurs natural join Catalogue as c1 group by aid, fnom, prix having prix>(select avg(prix) from Catalogue as c2 where c1.aid=c2.aid);
+
+Question 4.
+Group by :
+select aid from Catalogue group by aid having count(fid)>=2 order by aid;
+
+Produit Cartésien :
+select distinct(c1.aid) from Catalogue as c1, Catalogue as c2 where c1.aid=c2.aid and c1.fid<>c2.fid order by aid;
+
+Exists :
+select distinct(aid) from Catalogue as c1 
+where exists(select aid from Catalogue as c2 where c1.aid=c2.aid and c1.fid<>c2.fid) order by aid;
+
+Question 5.
+In :
+select fid from Fournisseurs where not fid in(select fid from Catalogue) order by fid;
+
+All/Some :
+select fid from Fournisseurs where fid<>all(select fid from Catalogue) order by fid;
+
+Exists :
+select fid from Fournisseurs as f
+where not exists(select fid from Catalogue as c where c.fid=f.fid) order by fid;
+
+Opération ensembliste :
+select fid from Fournisseurs except (select fid from Catalogue) order by fid;
+
+Question 6.
+select distinct anom from Articles as a 
+where exists (select fnom from Fournisseurs as f 
+ where fnom='kiventout' and not exists (select fid from Catalogue as c where f.fid<>c.fid and a.aid=c.aid));
+
+Question 7.
+select fid from Fournisseurs as f 
+where not exists (select aid from Articles as a 
+ where not exists (select aid, fid from Catalogue as c where a.aid=c.aid and f.fid=c.fid));
+
+Question 8.
+select fnom from (fournisseurs natural join catalogue) as c1 
+where not exists(select fnom from (fournisseurs natural join catalogue) as c2 where prix<>(select max(prix) from catalogue) and c1.fnom=c2.fnom);
+
+Question 9.
+select anom , min(prix) , max(prix) from (articles natural join catalogue) as c 
+where exists(select fid from (articles natural join catalogue) as d where c.anom=d.anom and c.fid <> d.fid)
+group by anom order by anom;
+
+Question 10.
+Group by :
+select anom, fnom from (articles natural join catalogue natural join fournisseurs) as c 
+group by anom, fnom having count(acoul)>1
+order by anom;
+
+Exists :
+select distinct anom, fnom from (articles natural join catalogue natural join fournisseurs) as c 
+where exists (select fid from (catalogue natural join articles) as c2 where c.fid=c2.fid and c.anom=c2.anom and c.acoul<>c2.acoul)
+order by anom;
+
+Question 11.
+select count(aid), fid from catalogue
+group by fid
+order by count(aid) desc
+limit 1;
+
+Question 12.
+select fnom from catalogue natural join fournisseurs
+group by fnom
+order by count(aid) desc
+limit 1;
+
+Question 13.
+Exists :
+select anom from (articles natural join catalogue) as c
+where not exists(select * from (articles natural join catalogue) as c2 
+ where c.anom=c2.anom and c.fid<>c2.fid);
+
+Group by :
+select anom from (articles natural join catalogue) as c
+group by anom having count(fid)=1;
+
+Question 14.
+Exists :
+select distinct aid from catalogue as c1 
+where not exists (select fid from catalogue as c2 where c1.aid=c2.aid and c2.prix<100) 
+order by aid;
+
+All/Some :
+select distinct aid from catalogue as c1 
+where 100<=all(select prix from catalogue as c2 where c1.aid=c2.aid) 
+order by aid;
+
+Question 15.
+select distinct aid from (catalogue natural join fournisseurs) as c1 
+where fad like '%USA%' and not exists (select fid from (catalogue natural join fournisseurs) as c2 where c1.aid=c2.aid and c2.fad not like '%USA%') 
+order by aid;
+
+Question 16.
+select fid from catalogue as c1 
+where 'rouge'=all(select acoul from (catalogue natural join articles) as c2 where c1.fid=c2.fid) 
+order by fid;
+
+Question 17.
+select fnom from fournisseurs as f
+where not exists(select * from articles as a 
+ where a.acoul='rouge' and f.fid<>all(select fid from catalogue as c where c.aid=a.aid));
+

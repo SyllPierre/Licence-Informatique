@@ -1,0 +1,71 @@
+IMPORTANT:
+changer l'age de l'etudiante d'histoire Angela MARTINET de 20 en 25.
+----------------------
+
+
+
+
+
+--- Q2
+  niveau   |         avg         | count 
+-----------+---------------------+-------
+ Master 1  | 21.4285714285714286 |     7
+ Licence 3 | 19.5000000000000000 |     6
+ Licence 1 | 17.6666666666666667 |     6
+ Licence 2 | 18.4000000000000000 |     5
+(4 rows)
+
+--- Q 4: 
+--- erreur tres frequente:  on "perd" le "soit est inscrit dans le programme d’histoire"
+--- cela se voit en mettant l'age de ANGELA MARTINET a 25.
+-- avec ce changement, si vous avez ce bug frequent, le resultat renvoye reste 20. 
+
+ max 
+-----
+  25
+(1 row)
+
+
+--- Q5:
+
+     e_nom     |   e_id    | c_id | c_id 
+---------------+-----------+------+------
+ Louis Fernand | 455798411 |   15 |   21
+(1 row)
+ 
+
+--- Q 9
+
+  prof_id  |   prof_nom   | nbcours 
+-----------+--------------+---------
+ 356187925 | Victor Goron |       1
+(1 row)
+
+
+---- Q10
+
+     e_nom     
+---------------
+ Jean Robinet
+ Lisa Marcheur
+ Louis Fernand
+ Anna Lopet
+(4 rows)
+
+
+--- Q11: erreur tres frequente: mot AUCUN pas pris en compte correctement.
+
+    e_nom      
+----------------
+ Susanne Martin
+ Morgan Monl
+ Louis Fernand
+(3 rows)
+
+
+--- Q12
+
+          avg           
+------------------------
+ 0.95652173913043478261
+(1 row)

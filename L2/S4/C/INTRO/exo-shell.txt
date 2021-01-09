@@ -1,0 +1,62 @@
+DESMAREST Mathilde / SYLLEBRANQUE Pierre
+
+TP d’introduction à la « pratique du langage C ».
+
+Q1) man
+
+Q2) 278
+
+Q3) man putchar
+    la fleche en haut
+
+Q4) emacs -version
+
+Q5) 25.2.2
+
+Q6)
+C- signifie qu'il faut enfoncer la touche Ctrl
+M- signifie qu'il faut enfoncer la touche Alt
+
+
+
+Q14) gcc -o nom_executable.out nom_du_programme.c
+
+Q18) Hi!
+
+Q19) a.out
+
+Q20) Que c'est la même chose.
+
+Q21) La compilation renvoie une erreur :
+
+"prog1.c:25:2: warning: implicit declaration of function ‘newline’ [-Wimplicit-function-declaration]
+  newline();
+  ^~~~~~~"
+
+Q27) '-2147483648' ça renvoie ceci car pour un mot signé,
+     un mot mémoire de 32 bits varie entre −2 147 483 648 et 2 147 483 647,
+     donc en binaire -2147483648 = 2147483648.
+
+Q31) Ce programme ne peut pas fonctionner car T n'est pas une variable déclaré et qu'il n'existe aucun macro lui donnant une autre signification.
+
+Q32) Le programme affiche alors DA
+
+Q33) Le programme affiche alors DB
+
+Q34) T a tout simplement été remplacé par 65+1
+
+Q36) Le programme affiche 39 41 39 car le préprocesseur a modifié __LINE__ au moment de l'affectation de ln et non pas à son évaluation.
+
+Q37) Pour la première ligne on putchar('0'+0) -> 0
+     puis putchar ('0'+1) -> 1
+     Pour la deuxieme ligne on putchar('0'+0&1) -> putchar(48&1) -> putchar(0)
+     puis putchar ('0'+1&1) -> putchar(49&1) -> putchar(1)
+
+Q38) gcc compcond.c -D NO_LOG=0
+
+Q40) Une erreur de compilation s'affiche si l'on ne définie pas SIZE sur la ligne de compilation.
+
+Q41) Un warning s'affiche car SIZE & (SIZE - 1) = 0 seulement si SIZE est une puissance de 2.
+
+Q48) On utilise la ligne :
+     gcc -g -O -c put_numbers.c -o put_numbers.o

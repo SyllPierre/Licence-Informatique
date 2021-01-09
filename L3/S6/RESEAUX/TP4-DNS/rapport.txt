@@ -1,0 +1,21 @@
+Rapport du TP4 de réseau :
+
+En C :
+Il y a le programme qui permet d'envoyer un message à l'aide du protocol UDP (Question 2).
+Pour le faire fonctionner dans udp.c vous devez, à la ligne 19, changer l'adresse IP et mettre la votre.
+
+Compiler le programme :  "gcc -o udp udp.c"
+
+Exécuter : "./udp monmessage"
+
+En Java :
+Programme qui permet de recevoir un message à l'aide du protocol UDP (Question 1).
+
+Exécuter : se mettre dans le dossier "java/src" et faire "java exo1.ReceiveUDP 5000"
+(car le programme qui s'occupe de l'envoie est sur le port 5000).
+
+
+
+Toujours en Java :
+Le programme qui s'occupe de créer une requête DNS, de l'envoyer au serveur et de récupérer
+la trame fournie par le serveur (Questions 3 et 4).

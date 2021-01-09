@@ -1,0 +1,28 @@
+digraph Automaton { 
+  rankdir = LR
+{rank=same;   0 [label=""];}
+{rank=same;   1 [label="t"];  2 [label="c"];  3 [label="a"];}
+{rank=same;   4 [label="tr"];  5 [label="cr"];  6 [label="at",peripheries=2];}
+{rank=same;   7 [label="try",peripheries=2];  8 [label="cry",peripheries=2];  9 [label="cre"];}
+{rank=same;   10 [label="crea"];}
+{rank=same;   11 [label="creat",peripheries=2];}
+{rank=same;   12 [label="create",peripheries=2];}
+  start0 [style=invis]
+  start0 -> 0[color="black:white:black"]
+  0 -> 3 [label = "a"]
+  0 -> 2 [label = "c"]
+  0 -> 1 [label = "t"]
+  1 -> 4 [label = "r"]
+  2 -> 5 [label = "r"]
+  3 -> 6 [label = "t"]
+  4 -> 7 [label = "y"]
+  5 -> 9 [label = "e"]
+  5 -> 8 [label = "y"]
+  9 -> 10 [label = "a"]
+  10 -> 11 [label = "t"]
+  11 -> 12 [label = "e"]
+    6 -> 1 [style=dotted]
+    11 -> 6 [style=dotted]
+    10 -> 3 [style=dotted]
+}
+

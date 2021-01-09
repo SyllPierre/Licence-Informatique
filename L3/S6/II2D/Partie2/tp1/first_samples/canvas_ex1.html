@@ -1,0 +1,36 @@
+<html>
+  <body>
+    <canvas id="input" width="320" height="240"/><br/>
+    <script type="text/javascript">
+
+      //BLOC1
+      /* Définition du canvas et du contexte pour pouvoir
+      * accéder aux données visuelles + creation d'un rectangle
+      * en (90,90) de taille 20x20 pixels 
+      */
+      var canvas = document.getElementById("input");
+      var ctx2d = canvas.getContext("2d");
+      ctx2d.fillRect(90, 90, 20, 20);
+
+      //BLOC2
+      /* Recupere l'encodage vecteur de l'image RGBA (totalité du canvas)
+      * et stocke les données dans la variable pixels 
+      */
+      var imgData = ctx2d.getImageData(0, 0, canvas.width, canvas.height);
+      var pixels = imgData.data;
+
+      //BLOC3
+      /* Recupére les données (RGBA) du pixel aux coordonnées (100,100) 
+      et affiche la position du pixel et ses valeurs rgba dans une messagebox */
+      var x = 100; var y = 100;
+      var pos_pixel_dans_vector = (y * imgData.width + x)<<2;
+      var r = pixels[pos_pixel_dans_vector + 0];
+      var g = pixels[pos_pixel_dans_vector + 1];
+      var b = pixels[pos_pixel_dans_vector + 2];
+      var a = pixels[pos_pixel_dans_vector + 3];
+
+      alert("Pixel at ("+x+", "+y+") : ("+r+", "+g+", "+b+", "+a+")");
+
+      </script>
+    </body>
+  </html>
